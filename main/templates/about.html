@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About - {{ about.name }}{% endblock %}
+
+{% block content %}
+
+<!-- About Section -->
+<section class="about-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <!-- Content -->
+      <div class="col-12" data-aos="fade-left">
+        <div class="row align-items-start g-4">
+          <!-- Profile Image -->
+          <div class="col-md-4" data-aos="fade-right">
+            {% if about.profile_image %}
+              <img src="{{ about.profile_image.url }}" alt="{{ about.name }}" class="img-fluid rounded shadow-lg about-profile-img">
+            {% else %}
+              <img src="{% static 'img/default-profile.jpg' %}" alt="Default Profile" class="img-fluid rounded shadow-lg about-profile-img">
+            {% endif %}
+          </div>
+          
+          <!-- Text Content -->
+          <div class="col-md-8">
+            <h2 class="gradient-text mb-3">Hi, I'm {{ about.name }}</h2>
+            <p class="lead">{{ about.short_intro }}</p>
+            <p>{{ about.description }}</p>
+          </div>
+        </div>
+
+        <!-- Personal Info -->
+        <h4 class="mt-5 mb-3 gradient-text">Personal Information</h4>
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <ul class="list-unstyled info-list">
+              {% if about.birthday %}<li><i class="bi bi-calendar-event me-2"></i><strong>Birthday:</strong> {{ about.birthday|date:"F d, Y" }}</li>{% endif %}
+              {% if about.phone %}<li><i class="bi bi-telephone me-2"></i><strong>Phone:</strong> {{ about.phone }}</li>{% endif %}
+              {% if about.email %}<li><i class="bi bi-envelope me-2"></i><strong>Email:</strong> {{ about.email }}</li>{% endif %}
+            </ul>
+          </div>
+          <div class="col-sm-6">
+            <ul class="list-unstyled info-list">
+              {% if about.address %}<li><i class="bi bi-geo-alt me-2"></i><strong>Address:</strong> {{ about.address }}</li>{% endif %}
+              <li><i class="bi bi-file-earmark-person me-2"></i><strong>CV:</strong>
+                {% if about.cv_file %}
+                  <a href="{{ about.cv_file.url }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer">Download CV</a>
+                {% else %}
+                  N/A
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        {% if about.skills.exists %}
+        <h4 class="mt-5 mb-3 gradient-text">Skills</h4>
+        <div class="row g-2">
+          {% for skill in about.skills.all %}
+            <div class="col-md-4 col-sm-6">
+              <div class="skill-card p-2 mb-2 rounded bg-dark shadow-sm text-center">
+                <i class="bi bi-check-circle-fill text-primary me-1" aria-hidden="true"></i>{{ skill.name }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Languages -->
+        {% if about.languages.exists %}
+        <h4 class="mt-5 mb-3 gradient-text">Languages</h4>
+        <div class="row g-3">
+          {% for lang in about.languages.all %}
+            <div class="col-md-6">
+              <div class="mb-2">
+                <strong>{{ lang.name }}</strong>
+                <div class="progress" style="height: 8px;" role="progressbar" aria-label="{{ lang.name }} proficiency">
+                  <div class="progress-bar bg-primary" style="width: {{ lang.proficiency }}%;" aria-valuenow="{{ lang.proficiency }}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Hobbies -->
+        {% if about.hobbies.exists %}
+        <h4 class="mt-4 mb-3 gradient-text">Hobbies & Interests</h4>
+        <div class="row g-2">
+          {% for hobby in about.hobbies.all %}
+            <div class="col-md-4 col-sm-6">
+              <div class="hobby-card p-2 mb-2 rounded bg-dark shadow-sm text-center">
+                <i class="bi bi-heart-fill text-danger me-1" aria-hidden="true"></i>{{ hobby.name }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Social Profiles -->
+        {% if about.social_profiles.exists %}
+        <h4 class="mt-5 mb-3 gradient-text">Connect With Me</h4>
+        <div class="social-links mt-2">
+          {% for profile in about.social_profiles.all %}
+            <a href="{{ profile.url }}" target="_blank" rel="noopener noreferrer" class="social-icon me-3" aria-label="{{ profile.name }}">
+              <i class="{{ profile.icon_class }}"></i>
+            </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+{% if services %}
+<section class="services-section py-5">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <h2 class="gradient-text mb-3">Services I Offer</h2>
+      <p class="lead text">Solutions tailored to your needs</p>
+    </div>
+
+    <div class="row g-4">
+      {% for service in services %}
+      <div class="col-md-6 col-lg-4" data-aos="fade-up">
+        <div class="service-card h-100 p-4 rounded">
+          {% if service.icon_class %}
+          <div class="service-icon mb-3">
+            <i class="{{ service.icon_class }}"></i>
+          </div>
+          {% endif %}
+          <h4 class="gradient-text mb-3">{{ service.name }}</h4>
+          <p class="text">{{ service.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}
+

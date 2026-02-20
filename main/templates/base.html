@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% block meta_description %}Personal Portfolio of Warren Karanja - Designer & Developer{% endblock %}">
+  <meta name="keywords" content="Warren Karanja, Portfolio, Developer, Designer, Freelancer">
+  <meta name="author" content="Warren Karanja">
+  
+  <title>{% block title %}Warren Karanja{% endblock %}</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+
+  <!-- Main CSS -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<header id="header" class="header w-100">
+  <div class="nav-wrapper w-100">
+    <div class="container d-flex flex-column flex-xl-row align-items-center justify-content-center justify-content-xl-between py-2">
+      
+      <!-- Logo -->
+      <a href="{% url 'index' %}" class="logo mb-2 mb-xl-0 text-center text-xl-start">
+        <span class="fw-bold gradient-text">Warren.</span>
+      </a>
+
+      <!-- Nav Links -->
+      <nav id="navmenu" class="navmenu mb-2 mb-xl-0">
+        <ul class="d-flex flex-column flex-xl-row justify-content-center mb-0">
+          <li><a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a></li>
+          <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+          <li><a href="{% url 'resume' %}" class="{% if request.resolver_match.url_name == 'resume' %}active{% endif %}">Resume</a></li>
+          <li><a href="{% url 'portfolio' %}" class="{% if request.resolver_match.url_name == 'portfolio' %}active{% endif %}">Portfolio</a></li>
+        </ul>
+      </nav>
+
+      <!-- Hire Me Button -->
+      <div class="nav-cta text-center text-xl-end">
+        <a href="{% url 'contact' %}" class="btn btn-primary btn-sm">Hire Me</a>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <i class="mobile-nav-toggle d-xl-none bi bi-list" aria-label="Toggle navigation"></i>
+
+    </div>
+  </div>
+</header>
+
+<!-- ======= BREADCRUMB (Optional) ======= -->
+{% block breadcrumb %}
+{% if block.super or page_title %}
+<section class="breadcrumb-section py-3">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% block page_title %}Page{% endblock %}</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+<!-- ======= MAIN CONTENT ======= -->
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ======= FOOTER SECTION ======= -->
+
+<footer class="footer w-100 py-4 text-center">
+  <div class="container d-flex flex-column align-items-center justify-content-center">
+    <h4 class="gradient-text mb-1">Warren Karanja</h4>
+    <p class="mb-2">Designer • Developer • Freelancer</p>
+
+    <div class="social-links mb-2">
+      {% for profile in social_profiles %}
+        <a href="{{ profile.url }}" target="_blank" rel="noopener" class="social-icon mx-1">
+          <i class="{{ profile.icon_class }}"></i>
+        </a>
+      {% endfor %}
+    </div>
+
+    <div class="small">&copy; {{ now.year }} All Rights Reserved.</div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/254794599260" target="_blank" rel="noopener noreferrer" class="whatsapp-float" title="Chat with us on WhatsApp">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+<!-- JS -->
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}" defer></script>
+<script src="{% static 'vendor/aos/aos.js' %}" defer></script>
+<script src="{% static 'vendor/typed.js/typed.umd.js' %}" defer></script>
+<script src="{% static 'js/static.js' %}" defer></script>
+
+{% block extra_scripts %}{% endblock %}
+
+</body>
+</html>

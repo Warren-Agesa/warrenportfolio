@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Me - {{ about.name }}{% endblock %}
+
+{% block content %}
+
+<!-- Contact Section -->
+<section class="contact-section">
+  <div class="contact-container">
+    <!-- Left Side - Contact Info -->
+    <div class="contact-info">
+      <div class="contact-header">
+        <h2 class="gradient-text mb-4">Let's Work Together</h2>
+        <p class="lead mb-5">Have a project in mind? I'd love to hear from you. Get in touch and let's create something amazing.</p>
+      </div>
+
+      <!-- Contact Details -->
+      <div class="contact-details-box mb-5">
+        {% if about.email %}
+        <div class="contact-detail-item mb-4">
+          <div class="detail-icon">
+            <i class="bi bi-envelope-fill"></i>
+          </div>
+          <div class="detail-content">
+            <h5 class="mb-1">Email</h5>
+            <a href="mailto:{{ about.email }}" class="text-primary">{{ about.email }}</a>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if about.phone %}
+        <div class="contact-detail-item mb-4">
+          <div class="detail-icon">
+            <i class="bi bi-telephone-fill"></i>
+          </div>
+          <div class="detail-content">
+            <h5 class="mb-1">Phone</h5>
+            <a href="tel:{{ about.phone }}" class="text-primary">{{ about.phone }}</a>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if about.address %}
+        <div class="contact-detail-item mb-4">
+          <div class="detail-icon">
+            <i class="bi bi-geo-alt-fill"></i>
+          </div>
+          <div class="detail-content">
+            <h5 class="mb-1">Location</h5>
+            <p class="mb-0">{{ about.address }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- WhatsApp CTA -->
+        <div class="contact-detail-item">
+          <div class="detail-icon whatsapp-icon">
+            <i class="bi bi-whatsapp"></i>
+          </div>
+          <div class="detail-content">
+            <h5 class="mb-1">WhatsApp</h5>
+            <a href="https://wa.me/254794599260" target="_blank" rel="noopener noreferrer" class="text-primary">Send a Message</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Response Time -->
+      <div class="response-info">
+        <p class="text-muted">
+          <i class="bi bi-clock-history me-2"></i>
+          <strong>Response Time:</strong> Usually responds within 24 hours
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Side - Contact Form -->
+    <div class="contact-form-wrapper">
+      <form class="contact-form" id="contactForm" method="post">
+        {% csrf_token %}
+        
+        <div id="successMessage" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;">
+          <i class="bi bi-check-circle me-2"></i>
+          <span id="successText"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div id="errorMessage" class="alert alert-danger alert-dismissible fade" role="alert" style="display: none;">
+          <i class="bi bi-exclamation-circle me-2"></i>
+          <span id="errorText"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="subject" class="form-label">Subject</label>
+          <input type="text" class="form-control" id="subject" name="subject" placeholder="What is this about?" required>
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" name="message" rows="5" placeholder="Tell me more about your project..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg w-100" id="submitBtn">
+          <i class="bi bi-send me-2"></i><span id="submitText">Send Message</span>
+        </button>
+
+        <div class="form-note mt-3 text-center text-muted small">
+          We respect your privacy. Your information will never be shared.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}

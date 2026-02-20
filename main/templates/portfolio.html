@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Portfolio - My Projects{% endblock %}
+
+{% block content %}
+
+<!-- Portfolio Section -->
+<section class="portfolio-section py-5">
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="portfolio-header mb-5" data-aos="fade-up">
+      <h2 class="gradient-text mb-2">Portfolio</h2>
+      <p class="lead ">Latest Projects & Work Showcases</p>
+    </div>
+
+    <!-- Featured Projects -->
+    {% if featured_projects %}
+    <div class="featured-projects mb-5" data-aos="fade-up">
+      <h3 class="gradient-text mb-4">Featured Projects</h3>
+      <div class="row g-4">
+        {% for project in featured_projects %}
+        <div class="col-md-6">
+          <div class="project-card featured-card h-100 overflow-hidden rounded">
+            <!-- Project Image -->
+            <div class="project-image-wrapper position-relative overflow-hidden">
+              {% if project.featured_image %}
+                <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" class="project-image img-fluid">
+              {% else %}
+                <div class="project-image-placeholder">No Image</div>
+              {% endif %}
+              <div class="project-overlay d-flex flex-column justify-content-center align-items-center">
+                <div class="overlay-content text-center">
+                  <h4 class="text-white mb-3">{{ project.title }}</h4>
+                  {% if project.project_url or project.github_url %}
+                  <div class="project-links">
+                    {% if project.project_url %}
+                    <a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary me-2">
+                      <i class="bi bi-link-45deg"></i> Live Demo
+                    </a>
+                    {% endif %}
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light">
+                      <i class="bi bi-github"></i> GitHub
+                    </a>
+                    {% endif %}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <!-- Project Details -->
+            <div class="project-details p-4">
+              {% if project.category %}
+              <span class="badge bg-primary mb-2">{{ project.category.name }}</span>
+              {% endif %}
+              <p class="text mb-3">{{ project.short_description|default:project.description|truncatewords:20 }}</p>
+              {% if project.skills.all %}
+              <div class="project-skills">
+                {% for skill in project.skills.all %}
+                <span class="skill-tag">{{ skill.name }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Filter Buttons -->
+    {% if categories %}
+    <div class="filter-section mb-5" data-aos="fade-up">
+      <div class="d-flex flex-wrap gap-2 justify-content-center">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        {% for category in categories %}
+        <button class="filter-btn" data-filter="category-{{ category.id }}">{{ category.name }}</button>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- All Projects Grid -->
+    <div class="projects-grid">
+      <div class="row g-4">
+        {% for project in projects %}
+        <div class="col-md-6 col-lg-4 project-item" data-category="category-{{ project.category.id|default:'all' }}" data-aos="fade-up">
+          <div class="project-card h-100 rounded overflow-hidden">
+            <!-- Project Image -->
+            <div class="project-image-wrapper position-relative overflow-hidden">
+              {% if project.featured_image %}
+                <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" class="project-image img-fluid">
+              {% else %}
+                <div class="project-image-placeholder">No Image</div>
+              {% endif %}
+              <div class="project-overlay d-flex flex-column justify-content-center align-items-center">
+                <div class="overlay-content text-center">
+                  <h5 class="text-white mb-3">{{ project.title }}</h5>
+                  {% if project.project_url or project.github_url %}
+                  <div class="project-links">
+                    {% if project.project_url %}
+                    <a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary me-2">
+                      <i class="bi bi-link-45deg"></i> Live
+                    </a>
+                    {% endif %}
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light">
+                      <i class="bi bi-github"></i> Code
+                    </a>
+                    {% endif %}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <!-- Project Details -->
+            <div class="project-details p-3">
+              {% if project.category %}
+              <span class="badge bg-primary mb-2" style="font-size: 0.75rem;">{{ project.category.name }}</span>
+              {% endif %}
+              <h6 class="mb-2">{{ project.title }}</h6>
+              <p class="text small mb-3">{{ project.short_description|default:project.description|truncatewords:15 }}</p>
+              {% if project.skills.all %}
+              <div class="project-skills">
+                {% for skill in project.skills.all %}
+                <span class="skill-tag-small">{{ skill.name }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+          <p class="text">No projects yet. Check back soon!</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+{% endblock %}

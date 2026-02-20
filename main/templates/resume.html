@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Resume - {{ about.name }}{% endblock %}
+
+{% block content %}
+
+<!-- Resume Section -->
+<section class="resume-section py-5">
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="resume-header mb-5" data-aos="fade-up">
+      <h2 class="gradient-text mb-2">{{ about.name }}'s Resume</h2>
+      <p class="lead">Professional Experience, Education & Certifications</p>
+    </div>
+
+    <!-- Resume Content -->
+    <div class="resume-content">
+      <div class="row">
+        <!-- Left Column - Experience & Education -->
+        <div class="col-lg-8">
+          
+          <!-- Experience Section -->
+          {% if experiences %}
+          <div class="resume-section mb-5" data-aos="fade-up">
+            <div class="section-header d-flex align-items-center mb-4">
+              <i class="bi bi-briefcase-fill gradient-text me-3" style="font-size: 1.5rem;"></i>
+              <h3 class="gradient-text mb-0">Professional Experience</h3>
+            </div>
+
+            {% for experience in experiences %}
+            <div class="resume-item mb-4 ps-4 border-left">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h5 class="mb-1">{{ experience.title }}</h5>
+                  <p class="text-primary mb-0">{{ experience.company }}
+                    {% if experience.location %} • {{ experience.location }}{% endif %}
+                  </p>
+                </div>
+                <span class="badge bg-primary">
+                  {% if experience.is_current %}
+                    Current
+                  {% else %}
+                    {{ experience.end_date|date:"M Y" }}
+                  {% endif %}
+                </span>
+              </div>
+              <small class="text-muted">
+                {{ experience.start_date|date:"M Y" }} - 
+                {% if experience.is_current %}
+                  Present
+                {% else %}
+                  {{ experience.end_date|date:"M Y" }}
+                {% endif %}
+              </small>
+              {% if experience.description %}
+              <p class="mt-2 mb-0">{{ experience.description }}</p>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!-- Education Section -->
+          {% if educations %}
+          <div class="resume-section mb-5" data-aos="fade-up">
+            <div class="section-header d-flex align-items-center mb-4">
+              <i class="bi bi-mortarboard-fill gradient-text me-3" style="font-size: 1.5rem;"></i>
+              <h3 class="gradient-text mb-0">Education</h3>
+            </div>
+
+            {% for education in educations %}
+            <div class="resume-item mb-4 ps-4 border-left">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h5 class="mb-1">{{ education.degree }}</h5>
+                  <p class="text-primary mb-0">{{ education.school_name }}
+                    {% if education.field_of_study %} • {{ education.field_of_study }}{% endif %}
+                  </p>
+                </div>
+                <span class="badge bg-info">
+                  {% if education.is_current %}
+                    Current
+                  {% else %}
+                    {{ education.end_date|date:"Y" }}
+                  {% endif %}
+                </span>
+              </div>
+              <small class="text-muted">
+                {{ education.start_date|date:"M Y" }} - 
+                {% if education.is_current %}
+                  Present
+                {% else %}
+                  {{ education.end_date|date:"M Y" }}
+                {% endif %}
+              </small>
+              {% if education.description %}
+              <p class="mt-2 mb-0">{{ education.description }}</p>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+        </div>
+
+        <!-- Right Column - Skills & Certifications -->
+        <div class="col-lg-4">
+          
+          <!-- Skills Section -->
+          {% if about.skills.all %}
+          <div class="resume-sidebar-section mb-5" data-aos="fade-up">
+            <div class="section-header d-flex align-items-center mb-3">
+              <i class="bi bi-star-fill gradient-text me-2" style="font-size: 1.3rem;"></i>
+              <h4 class="gradient-text mb-0">Skills</h4>
+            </div>
+            <div class="skillset">
+              {% for skill in about.skills.all %}
+              <span class="skill-badge mb-2">{{ skill.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Certifications Section -->
+          {% if certifications %}
+          <div class="resume-sidebar-section" data-aos="fade-up">
+            <div class="section-header d-flex align-items-center mb-3">
+              <i class="bi bi-award-fill gradient-text me-2" style="font-size: 1.3rem;"></i>
+              <h4 class="gradient-text mb-0">Certifications</h4>
+            </div>
+
+            {% for cert in certifications %}
+            <div class="cert-item mb-3 p-3 bg-dark rounded">
+              <h6 class="mb-1">{{ cert.name }}</h6>
+              <small class="text-primary">{{ cert.issuer }}</small>
+              <p class="text-muted mb-1" style="font-size: 0.85rem;">
+                {{ cert.issue_date|date:"M d, Y" }}
+                {% if cert.expiry_date %}
+                  - {{ cert.expiry_date|date:"M d, Y" }}
+                {% endif %}
+              </p>
+              {% if cert.credential_url %}
+              <a href="{{ cert.credential_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">View Credential</a>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+{% endblock %}
