@@ -1,2 +1,2 @@
-release: python manage.py migrate
-web: gunicorn warrenportfolio.wsgi
+web: python manage.py collectstatic --noinput && gunicorn warrenportfolio.wsgi
+
