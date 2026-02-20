@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-(1b1*@3x__zo49l%+wc6+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,*.railway.app,*.up.railway.app').split(',')
 
 
 # Application definition
@@ -166,4 +166,10 @@ OWNER_EMAIL = os.environ.get("OWNER_EMAIL")
 
 # Default from email
 DEFAULT_FROM_EMAIL = 'noreply@warrenkaranja.com'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://warrenportfolio.up.railway.app',
+    "https://www.mydomain.com",
+]
+
 
