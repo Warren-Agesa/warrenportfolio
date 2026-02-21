@@ -13,9 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ========================
 
-# Use environment variable or generate a random key for local dev
 SECRET_KEY = os.environ.get("SECRET_KEY", get_random_secret_key())
-
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.environ.get(
@@ -146,7 +144,9 @@ OWNER_EMAIL = os.environ.get("OWNER_EMAIL")
 # ========================
 
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    # Railway already handles HTTPS, so avoid redirect loops
+    SECURE_SSL_REDIRECT = False
+
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
@@ -156,6 +156,7 @@ if not DEBUG:
 
 CSRF_TRUSTED_ORIGINS = [
     "https://warrenportfolio.up.railway.app",
+    "https://*.railway.app",
 ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
