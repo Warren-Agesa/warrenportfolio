@@ -170,3 +170,5 @@ if not DEBUG:
 CSRF_TRUSTED_ORIGINS = [
     "https://warrenportfolio.up.railway.app",
 ]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
