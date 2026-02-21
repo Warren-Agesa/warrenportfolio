@@ -144,7 +144,7 @@ OWNER_EMAIL = os.environ.get("OWNER_EMAIL")
 # ========================
 
 if not DEBUG:
-    # Railway already handles HTTPS, so avoid redirect loops
+    # Disable redirect loop, Railway already enforces HTTPS
     SECURE_SSL_REDIRECT = False
 
     SESSION_COOKIE_SECURE = True
